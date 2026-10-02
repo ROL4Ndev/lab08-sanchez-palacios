@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Inventario de la Tienda</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f9; padding: 40px; }
+    .container { max-width: 800px; margin: 0 auto; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    .total-card { background: #007bff; color: white; padding: 15px; border-radius: 8px; font-size: 1.2rem; font-weight: bold; margin-bottom: 20px; text-align: center; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+    th { background-color: #f2f2f2; }
+    /* Estilo para productos con stock 0 */
+    .sin-stock { background-color: #ffe6e6; color: red; font-weight: bold; }
+    .badge-alerta { background-color: red; color: white; padding: 3px 6px; border-radius: 4px; font-size: 0.8rem; margin-left: 5px; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Registro de Productos - Inventario</h2>
+
+    <!-- Mostrar la suma total del valor del inventario (precio * stock) -->
+    <div class="total-card">
+      Valor Total del Inventario: S/. <%= valorTotalInventario.toLocaleString() %>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Categoría</th>
+          <th>Precio</th>
+          <th>Stock</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% productos.forEach(producto => { %>
+          <tr class="<%= producto.stock === 0 ? 'sin-stock' : '' %>">
+            <td><%= producto.nombre %></td>
+            <td><%= producto.categoria %></td>
+            <td>S/. <%= producto.precio %></td>
+            <td>
+              <%= producto.stock %>
+              <% if (producto.stock === 0) { %>
+                <span class="badge-alerta">¡SIN STOCK!</span>
+              <% } %>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+
+</body>
+</html>
