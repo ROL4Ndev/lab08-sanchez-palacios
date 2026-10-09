@@ -1,7 +1,7 @@
 {
   "name": "tienda-inventario",
   "version": "1.0.0",
-  "description": "",
+  "description": "Este proyecto corresponde al desarrollo práctico del **Laboratorio N° 07** para el curso de **Bases de Datos Avanzadas**. Consiste en un sistema de gestión de inventario para una tienda web construida con **Node.js**, **Express**, **Mongoose** y el motor de plantillas **EJS**.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,7 +12,15 @@
   "license": "ISC",
   "dependencies": {
     "ejs": "^6.0.1",
-    "express": "^5.2.1",
-    "mongoose": "^9.10.3"
-  }
+    "express": "^5.3.0",
+    "mongoose": "^9.11.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ROL4Ndev/lab07-sanchez-palacios.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ROL4Ndev/lab07-sanchez-palacios/issues"
+  },
+  "homepage": "https://github.com/ROL4Ndev/lab07-sanchez-palacios#readme"
 }

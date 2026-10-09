@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Control de Inventario - Lab 08</title>
+  <title>Control de Pacientes - Clinica</title>
   <style>
     body { font-family: Arial, sans-serif; background-color: #f4f4f9; padding: 30px; display: flex; flex-direction: column; align-items: center; }
     .card { background: white; padding: 25px 35px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 700px; margin-bottom: 20px; }
@@ -24,26 +24,26 @@
     th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
     th { background-color: #007bff; color: white; }
     tr:nth-child(even) { background-color: #f9f9f9; }
-    .sin-stock-row { background-color: #ffe6e6 !important; color: #d9534f; }
+    .gratis-row { background-color: #ffe6e6 !important; color: #d9534f; }
     .badge-alerta { background-color: #dc3545; color: white; padding: 3px 6px; border-radius: 4px; font-size: 0.8em; font-weight: bold; margin-left: 5px; }
   </style>
 </head>
 <body>
   <div class="card">
-    <h2>Control de Inventario (Lab 08)</h2>
+    <h2>Gestion de Pacientes (Clinica)</h2>
 
     <div class="kpi-card">
-      💰 Valor Total del Inventario: S/. <%= valorTotalInventario.toLocaleString() %>
+      Recaudacion Total Consultas: S/. <%= recaudacionTotal.toLocaleString() %>
     </div>
 
     <div class="menu">
-      <a href="#seccion-form">➕ / ✏️ Registrar o Editar</a>
-      <a href="#seccion-filtro">🔍 Consultar</a>
-      <a href="/">📋 Ver Todo</a>
+      <a href="#seccion-form">Registrar o Editar</a>
+      <a href="#seccion-filtro">Consultar</a>
+      <a href="/">Ver Todo</a>
     </div>
 
     <div id="seccion-filtro" style="margin-bottom: 25px; background: #f8f9fa; padding: 15px; border-radius: 8px;">
-      <h3>🔍 Búsqueda de Productos</h3>
+      <h3>Busqueda de Pacientes</h3>
       <form action="/" method="GET" style="grid-template-columns: 1fr auto;">
         <input type="text" name="busqueda" placeholder="Buscar por nombre..." value="<%= busqueda %>">
         <button type="submit" style="background-color: #007bff; margin-top: 0;">Buscar</button>
@@ -51,31 +51,31 @@
     </div>
 
     <div id="seccion-form">
-      <h3><%= productoEditar ? '✏️ Modificar Producto' : '➕ Registrar Producto' %></h3>
+      <h3><%= pacienteEditar ? 'Modificar Paciente' : 'Registrar Paciente' %></h3>
       
-      <form action="<%= productoEditar ? '/editar/' + productoEditar._id : '/crear' %>" method="POST">
+      <form action="<%= pacienteEditar ? '/editar/' + pacienteEditar._id : '/crear' %>" method="POST">
         <div class="form-group">
-          <label>Nombre:</label>
-          <input type="text" name="nombre" value="<%= productoEditar ? productoEditar.nombre : '' %>" required>
+          <label>Nombre del Paciente:</label>
+          <input type="text" name="nombre" value="<%= pacienteEditar ? pacienteEditar.nombre : '' %>" required>
         </div>
         <div class="form-group">
-          <label>Categoría:</label>
-          <input type="text" name="categoria" value="<%= productoEditar ? productoEditar.categoria : '' %>" required>
+          <label>Especialidad Medica:</label>
+          <input type="text" name="especialidad" value="<%= pacienteEditar ? pacienteEditar.especialidad : '' %>" required>
         </div>
         <div class="form-group">
-          <label>Precio Unitario (S/.):</label>
-          <input type="number" step="0.01" name="precio" value="<%= productoEditar ? productoEditar.precio : '' %>" required>
+          <label>Costo de Consulta (S/.):</label>
+          <input type="number" step="0.01" name="costo" value="<%= pacienteEditar ? pacienteEditar.costo : '' %>" required>
         </div>
         <div class="form-group">
-          <label>Stock:</label>
-          <input type="number" name="stock" value="<%= productoEditar ? productoEditar.stock : '' %>" required>
+          <label>Edad:</label>
+          <input type="number" name="edad" value="<%= pacienteEditar ? pacienteEditar.edad : '' %>" required>
         </div>
         <div class="form-group-full">
-          <button type="submit" style="background-color: <%= productoEditar ? '#ffc107' : '#28a745' %>; color: <%= productoEditar ? '#333' : 'white' %>;">
-            <%= productoEditar ? 'Guardar Cambios' : 'Registrar Producto' %>
+          <button type="submit" style="background-color: <%= pacienteEditar ? '#ffc107' : '#28a745' %>; color: <%= pacienteEditar ? '#333' : 'white' %>;">
+            <%= pacienteEditar ? 'Guardar Cambios' : 'Registrar Paciente' %>
           </button>
-          <% if (productoEditar) { %>
-            <a href="/" style="text-align: center; display: block; margin-top: 10px; color: #6c757d; text-decoration: none;">Cancelar Edición</a>
+          <% if (pacienteEditar) { %>
+            <a href="/" style="text-align: center; display: block; margin-top: 10px; color: #6c757d; text-decoration: none;">Cancelar Edicion</a>
           <% } %>
         </div>
       </form>
@@ -83,37 +83,37 @@
   </div>
 
   <div class="card">
-    <h3>📋 Artículos en Almacén</h3>
+    <h3>Lista de Pacientes</h3>
     <table>
       <thead>
         <tr>
           <th>Nombre</th>
-          <th>Categoría</th>
-          <th>Precio</th>
-          <th>Stock</th>
+          <th>Especialidad</th>
+          <th>Edad</th>
+          <th>Costo Consulta</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
-        <% if (productos.length === 0) { %>
+        <% if (pacientes.length === 0) { %>
           <tr>
-            <td colspan="5" style="text-align: center;">No hay productos registrados.</td>
+            <td colspan="5" style="text-align: center;">No hay pacientes registrados.</td>
           </tr>
         <% } else { %>
-          <% productos.forEach(p => { %>
-            <tr class="<%= p.stock === 0 ? 'sin-stock-row' : '' %>">
+          <% pacientes.forEach(p => { %>
+            <tr class="<%= p.costo === 0 ? 'gratis-row' : '' %>">
               <td><%= p.nombre %></td>
-              <td><%= p.categoria %></td>
-              <td>S/. <%= p.precio %></td>
+              <td><%= p.especialidad %></td>
+              <td><%= p.edad %> anos</td>
               <td>
-                <%= p.stock %> unidades
-                <% if (p.stock === 0) { %>
-                  <span class="badge-alerta">¡SIN STOCK!</span>
+                S/. <%= p.costo %>
+                <% if (p.costo === 0) { %>
+                  <span class="badge-alerta">CONSULTA GRATUITA</span>
                 <% } %>
               </td>
               <td style="display: flex; gap: 5px;">
                 <a href="/?editId=<%= p._id %>#seccion-form" class="btn-edit">Editar</a>
-                <form action="/eliminar/<%= p._id %>" method="POST" onsubmit="return confirm('¿Desea eliminar este producto?');" style="display:inline;">
+                <form action="/eliminar/<%= p._id %>" method="POST" onsubmit="return confirm('Desea eliminar este paciente?');" style="display:inline;">
                   <button type="submit" class="btn-delete">Eliminar</button>
                 </form>
               </td>
