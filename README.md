@@ -40,7 +40,9 @@ Este proyecto corresponde al desarrollo práctico del **Laboratorio N° 08** par
 
 ### Pasos para ejecutar el proyecto
 
+### Pasos para ejecutar el proyecto
+
 1. **Clonar el repositorio:**
    ```bash
-   git clone [https://github.com/ROL4Ndev/lab07-sanchez-palacios.git](https://github.com/ROL4Ndev/lab07-sanchez-palacios.git) lab08-sanchez-palacios
+   git clone [https://github.com/ROL4Ndev/lab08-sanchez-palacios.git](https://github.com/ROL4Ndev/lab08-sanchez-palacios.git)
    cd lab08-sanchez-palacios
